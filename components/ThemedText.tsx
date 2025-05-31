@@ -16,7 +16,6 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
   return (
     <Text
       style={[
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: 'bold',
   },
   link: {

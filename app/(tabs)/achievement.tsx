@@ -1,3 +1,4 @@
+//just copied my index home page onto here for ref
 import { StyleSheet } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
@@ -8,9 +9,8 @@ import { ThemedView } from '@/components/ThemedView';
 
 
 import React, { useState } from 'react';
-import { Button, Linking, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 //to output video
-
 
 
 //so coz its a function, i gotta put it outside my return render section in homescreen
@@ -45,8 +45,6 @@ import { Button, Linking, Text, TextInput, View } from 'react-native';
         };
 
 
-
-
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
@@ -72,28 +70,27 @@ export default function HomeScreen() {
       
       //gonna input my user textbox here to type the word         
       < SignTranslator/>
-      </ThemedView>
-
-
-
-
-
-     //gonna do a feedback button-u click on it to directed to gopgle web-form
-      <Button
-       onPress={() => { 
-        console.log('You have pressed the button!');
-        Linking.openURL("https://docs.google.com/forms/d/e/1FAIpQLSfpQz8-DFa6gP4CiN_rLhai7uWLVR7Cp3NyshyxUKug-3UNYw/viewform?usp=preview");
-       
-    
-
-       }}
-       title="Press to give feedback"
-       color="#191C1C"
-       
-       />
-
       
 
+
+
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText>
+          {`Tap the Explore tab to learn more about what's included in this starter app.`}
+        </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
+        <ThemedText>
+          {`When you're ready, run `}
+          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
+          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
+          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        </ThemedText>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
