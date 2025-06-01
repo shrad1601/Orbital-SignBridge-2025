@@ -135,8 +135,9 @@ const styles = StyleSheet.create({
 */
 
 
-import { useState } from 'react';
-import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+
+      import { useState } from 'react';
+import { Button, Image, StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function App() {
@@ -171,10 +172,7 @@ export default function App() {
 
       <View style={styles.container}>
         <Text style={styles.title}>Login Page</Text>
-
-        {error !== '' && (
-          <Text style={styles.errorText}>{error}</Text>
-        )}
+        {error !== '' && <Text style={styles.errorText}>{error}</Text>}
 
         <TextInput
           style={styles.input}
@@ -183,21 +181,27 @@ export default function App() {
           onChangeText={setEmail}
         />
 
-        {/* Fake password input */}
+        {/* Hidden TextInput for typing */}
         <TextInput
-          style={styles.input}
-          placeholder="Enter your password"
-          value={'•'.repeat(passwordRaw.length)}
-          onChangeText={(val) => setPasswordRaw(prev => val.length > prev.length ? prev + val.slice(-1) : prev.slice(0, -1))}
-          autoCorrect={false}
+          style={[styles.input, { position: 'absolute', top: 250, opacity: 0 }]} // hide it
+          value={passwordRaw}
+          onChangeText={setPasswordRaw}
           autoCapitalize="none"
+          autoCorrect={false}
         />
 
+        {/* Visible fake password dots */}
+        <Pressable
+          style={styles.input}
+          onPress={() => {}} // required for pressability on Android
+        >
+          <Text style={{ fontSize: 18, color: '#333' }}>
+            {'•'.repeat(passwordRaw.length)}
+          </Text>
+        </Pressable>
+
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Sign in"
-            onPress={handleLogin}
-          />
+          <Button title="Sign in" onPress={handleLogin} />
         </View>
       </View>
     </View>
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     marginTop: 10,
-    color: '#000'
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
@@ -257,3 +261,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
