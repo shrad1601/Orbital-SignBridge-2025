@@ -27,6 +27,21 @@ export default function HomeScreen() {
     {/*i need 2 sections: delete account and log out*/} 
     
     <Button 
+        onPress={async () => {
+        console.log("to log out");
+        //await logout();
+        useRouter().replace('/login');
+
+        }}
+        title="Log out"
+        //style={styles.stepContainer} 
+        color="#6807f7"
+     />
+
+
+
+
+    <Button 
         onPress={() => {
         console.log("to delete");
         Toast.show({
@@ -41,17 +56,7 @@ export default function HomeScreen() {
         
      />
 
-     <Button 
-        onPress={async () => {
-        console.log("to log out");
-        //await logout();
-        useRouter().replace('/login');
-
-        }}
-        title="Log out"
-        //style={styles.stepContainer} 
-        color="#6807f7"
-     />
+     
      
 
 
