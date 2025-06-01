@@ -19,6 +19,10 @@ import { SvgXml } from 'react-native-svg';
 
 
 
+
+
+
+
 export default function HomeScreen() {
    
     //cannot put javscript const logic insie return block
@@ -31,6 +35,10 @@ export default function HomeScreen() {
       setSvg(avatar);
     };
   
+
+
+  
+
   
     return (
     <ParallaxScrollView

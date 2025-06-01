@@ -7,6 +7,11 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import * as Sentry from '@sentry/react-native';
 
+
+
+import Toast from 'react-native-toast-message';
+
+
 Sentry.init({
   dsn: 'https://efb849ba89c0bec353c890431c064e45@o4509415216316416.ingest.de.sentry.io/4509415230341200',
 
@@ -36,10 +41,19 @@ export default Sentry.wrap(function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+     
+     
+      <Stack screenOptions={{ headerShown: false }}>
+
+        <Stack.Screen name="login" />
+
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+
+
+      <Toast />
+
       <StatusBar style="auto" />
     </ThemeProvider>
   );

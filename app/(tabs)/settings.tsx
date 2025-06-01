@@ -8,10 +8,15 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import React from 'react';
 import { Button } from 'react-native';
 
+//gotta get login to be able to do logout
+import { useRouter } from 'expo-router';
  
-
+import Toast from 'react-native-toast-message';
 
 export default function HomeScreen() {
+
+  
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -24,20 +29,27 @@ export default function HomeScreen() {
     <Button 
         onPress={() => {
         console.log("to delete");
+        Toast.show({
+            type: 'info',
+            text1: 'Account will be deleted',
+        });
+        
         }}
         title="Delete account"
-        style={styles.stepContainer}
+        //style={styles.stepContainer}
         color="#6807f7"
-        
         
      />
 
      <Button 
-        onPress={() => {
+        onPress={async () => {
         console.log("to log out");
+        //await logout();
+        useRouter().replace('/login');
+
         }}
         title="Log out"
-        style={styles.stepContainer} 
+        //style={styles.stepContainer} 
         color="#6807f7"
      />
      

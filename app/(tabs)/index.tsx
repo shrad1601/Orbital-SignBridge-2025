@@ -8,14 +8,21 @@ import { ThemedView } from '@/components/ThemedView';
 
 
 import React, { useState } from 'react';
-import { Button, Linking, Text, TextInput, View } from 'react-native';
-//to output video
+import { Button, Linking, TextInput, View } from 'react-native';
 
+
+//to output video
+import { Video } from 'expo-av';
 
 
 //so coz its a function, i gotta put it outside my return render section in homescreen
  const SignTranslator = () => {
           const [text, setText] = useState('');
+          
+
+          const videoSource = require('../../assets/videos/THANK-YOU!.mp4');
+
+
           return (
             <View style={{padding: 10}}>
               <TextInput 
@@ -33,12 +40,38 @@ import { Button, Linking, Text, TextInput, View } from 'react-native';
               }}
               >
 
-              <Text style={{padding: 10, fontSize:40, backgroundColor: '#96DED1'}}>
+           {/* <Text style={{padding: 10, fontSize:40, backgroundColor: '#96DED1'}}>
                 {text
                   .split(' ')
                   .map(word => word && '🤗')
                   .join(' ')}
-              </Text>
+              </Text> */}
+
+
+              //text.trim so that white spaces are not counted
+              {text.trim() !== '' &&
+               text.trim().split(' ').map((_, index) => (
+                <Video
+                  key={index}
+                  source={videoSource}
+                  style={{ width: '100%', height: 200, marginBottom: 10 }}
+                  
+                  isLooping
+                  shouldPlay
+                  
+                />
+          ))}
+
+              
+              
+
+
+              
+
+
+
+
+
             </View>
             </View>
           ); 
@@ -48,6 +81,16 @@ import { Button, Linking, Text, TextInput, View } from 'react-native';
 
 
 export default function HomeScreen() {
+
+
+  
+
+
+
+
+
+
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -70,7 +113,7 @@ export default function HomeScreen() {
         <ThemedText type="subtitle">Input text here!</ThemedText>
         
       
-      //gonna input my user textbox here to type the word         
+      //gonna input my user textbox here to type the word      
       < SignTranslator/>
       </ThemedView>
 
@@ -93,6 +136,16 @@ export default function HomeScreen() {
        />
 
       
+
+
+
+       
+
+
+
+
+
+
 
     </ParallaxScrollView>
   );
