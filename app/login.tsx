@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 
 
 
-      import { useState } from 'react';
+      import { useState, useRef } from 'react';
 import { Button, Image, StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 
@@ -144,6 +144,7 @@ export default function App() {
   const [email, setEmail] = useState('');
   const [passwordRaw, setPasswordRaw] = useState('');
   const [error, setError] = useState('');
+  const inputRef = useRef(null);
   const router = useRouter();
 
   const CORRECT_EMAIL = 'Test@example.com';
@@ -160,7 +161,7 @@ export default function App() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={styles.header}>
         <Image
           source={require('@/assets/images/logo-new.png')}
@@ -181,21 +182,23 @@ export default function App() {
           onChangeText={setEmail}
         />
 
-        {/* Hidden TextInput for typing */}
+        {/* Real input (invisible) */}
         <TextInput
-          style={[styles.input, { position: 'absolute', top: 250, opacity: 0 }]} // hide it
+          ref={inputRef}
           value={passwordRaw}
           onChangeText={setPasswordRaw}
+          style={styles.hiddenInput}
           autoCapitalize="none"
           autoCorrect={false}
+          keyboardType="default"
         />
 
-        {/* Visible fake password dots */}
+        {/* Fake visible password dots */}
         <Pressable
           style={styles.input}
-          onPress={() => {}} // required for pressability on Android
+          onPress={() => inputRef.current && inputRef.current.focus()}
         >
-          <Text style={{ fontSize: 18, color: '#333' }}>
+          <Text style={{ fontSize: 18, color: '#000' }}>
             {'•'.repeat(passwordRaw.length)}
           </Text>
         </Pressable>
@@ -209,6 +212,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  hiddenInput: {
+    position: 'absolute',
+    top: 200,
+    left: '10%',
+    width: '80%',
+    height: 50,
+    opacity: 0,
+  },
   input: {
     width: '80%',
     height: 50,
@@ -261,4 +272,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
