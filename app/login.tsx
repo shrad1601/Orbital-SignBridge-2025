@@ -38,6 +38,7 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={styles.header}>
         <Image
           source={require('@/assets/images/logo-new.png')}
