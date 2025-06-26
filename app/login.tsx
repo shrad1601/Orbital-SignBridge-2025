@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
 */
 
 
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
-import { useRouter } from 'expo-router';
 
 export default function App() {
   const [email, setEmail] = useState('');

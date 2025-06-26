@@ -22,6 +22,7 @@ const MAPPING = {
   'figure.stand': 'BoyOutlined', 
   'medal': 'WorkspacePremiumOutlined', 
   'gearshape.fill': 'SettingsOutlined',
+  'chevron.left': 'chevron-left',
 
 } ;
 

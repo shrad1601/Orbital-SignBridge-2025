@@ -16,7 +16,7 @@ import { createAvatar } from '@dicebear/core';
 import { Button, ScrollView, TextInput, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
-
+//milestone 2-tryna get the avatar customisation available in dicebear
 
 
 
@@ -26,8 +26,8 @@ import { SvgXml } from 'react-native-svg';
 export default function HomeScreen() {
    
     //cannot put javscript const logic insie return block
-    //const seeds = ['Kitty', 'Doggy', 'Lion', 'Hero'];
-    const [seed, setSeed] = useState('Kitty');
+    
+    const [seed, setSeed] = useState('replace this with any name');
     const [svg, setSvg] = useState('');
 
     const generateAvatar = () => {
@@ -40,7 +40,7 @@ export default function HomeScreen() {
   
 
   
-    return (
+    return ( 
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       >
@@ -84,6 +84,7 @@ export default function HomeScreen() {
 
     
     </ParallaxScrollView>
+
   );
 }
 

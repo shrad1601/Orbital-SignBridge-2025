@@ -48,6 +48,7 @@ export default Sentry.wrap(function RootLayout() {
         <Stack.Screen name="login" />
 
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="feedbackOwn" />
         <Stack.Screen name="+not-found" />
       </Stack>
 

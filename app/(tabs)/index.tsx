@@ -8,11 +8,13 @@ import { ThemedView } from '@/components/ThemedView';
 
 
 import React, { useState } from 'react';
-import { Button, Linking, TextInput, View } from 'react-native';
+import { Button, TextInput, View } from 'react-native';
 
 
 //to output video
 import { Video } from 'expo-av';
+
+import { useRouter } from 'expo-router';
 
 
 //so coz its a function, i gotta put it outside my return render section in homescreen
@@ -125,13 +127,15 @@ export default function HomeScreen() {
       <Button
        onPress={() => { 
         console.log('You have pressed the button!');
-        Linking.openURL("https://docs.google.com/forms/d/e/1FAIpQLSfpQz8-DFa6gP4CiN_rLhai7uWLVR7Cp3NyshyxUKug-3UNYw/viewform?usp=preview");
-       
+        //Linking.openURL("https://docs.google.com/forms/d/e/1FAIpQLSfpQz8-DFa6gP4CiN_rLhai7uWLVR7Cp3NyshyxUKug-3UNYw/viewform?usp=preview");
+        useRouter().push('/feedbackOwn');
+        
     
 
        }}
        title="Press to give feedback"
-       color="#191C1C"
+       color="#003d99"
+       
        
        />
 

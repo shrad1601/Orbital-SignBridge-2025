@@ -41,7 +41,8 @@
           "project": "signbridge-feedback",
           "organization": "nus-l2"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
