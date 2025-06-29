@@ -42,7 +42,8 @@
           "organization": "nus-l2"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true

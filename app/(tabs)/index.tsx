@@ -7,22 +7,95 @@ import { ThemedView } from '@/components/ThemedView';
 //import { TextInput } from 'react-native-gesture-handler'; //this line caused compile error
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 
 
 //to output video
-import { Video } from 'expo-av';
+//import { Video } from 'expo-av'; man apparently expo-av is deprecated
+import { useVideoPlayer, VideoView } from 'expo-video';
+
 
 import { useRouter } from 'expo-router';
 
+import Toast from 'react-native-toast-message';
+
+//coz i wanna wait for full user input to be typed
+import { useDebounce } from "use-debounce";
 
 //so coz its a function, i gotta put it outside my return render section in homescreen
  const SignTranslator = () => {
           const [text, setText] = useState('');
           
+          const [videoSource , setVideoSource] = useState(''); //coz MLquery output wld be a string
 
-          const videoSource = require('../../assets/videos/THANK-YOU!.mp4');
+          const[debouncedText] = useDebounce(text, 500);
+          useEffect( () => {
+            //i can only fetch when user inputs and i only wanna run fetch after they fully typed
+          
+            if(debouncedText != '' ) {
+
+              Toast.show({
+                          type: 'info',
+                          text1: 'Will take some time to load video',
+                          text2: 'You will get a msg once video loads!'
+                      });
+
+              //man i had to type the whole url coz i am running on simulator & not web
+              fetch(`http://127.0.0.1:5000/outputURL/${text}`).then( 
+                response => {
+                  console.log(response);
+                  console.log("response status is " + response.status);
+                  
+                  response.headers.forEach((value,key) => {
+                    console.log(`${key}: ${value}`)
+                  });
+
+                  return response.text() //coz my response is just a url so i formate as text and not json
+                }
+                ).then(
+                //take the data in text  & set it
+                data => {  
+                  //oops the url when console comes with a whitespace so cleanit
+                  const cleanedURL = data.trim()
+                  setVideoSource(cleanedURL)
+                  console.log('this is data b4 cleanup' + data)
+                  console.log(videoSource)
+                  console.log('this is the cleaned url' + cleanedURL)
+                }
+              )
+          }
+
+
+          //I do ,[debouncedText] so that everytime text changes my useeffect wld be re-rendered
+          }, [debouncedText]);
+
+
+          /*man for expo-vidoe i gotta do a const and again 
+          we cant re-render native hooks*/
+          const player = useVideoPlayer(videoSource);
+          useEffect(() => {
+            if(videoSource != '') {
+
+              Toast.show({
+                          type: 'info',
+                          text1: 'Video has loaded!',
+                      });
+
+              console.log("checking inside 2nd use" + videoSource)
+              player.loop = true;
+              player.play();
+              player.muted = true;
+
+              
+            }
+          }, [videoSource, player]);
+
+
+
+          
+
+
 
 
           return (
@@ -30,9 +103,12 @@ import { useRouter } from 'expo-router';
               <TextInput 
                 style={{height:30, padding:5, backgroundColor: '#96DED1'}}
                 placeholder="Type here" //like what my box will default have
-                onChangeText={newText => setText(newText)}
+                onChangeText={ newText => {
+                  setText(newText)}
+                }
                 defaultValue={text}
               />
+              
 
               //i want an outline box
               <View style={{borderWidth: 50, 
@@ -50,19 +126,19 @@ import { useRouter } from 'expo-router';
               </Text> */}
 
 
-              //text.trim so that white spaces are not counted
-              {text.trim() !== '' &&
-               text.trim().split(' ').map((_, index) => (
-                <Video
-                  key={index}
-                  source={videoSource}
-                  style={{ width: '100%', height: 200, marginBottom: 10 }}
-                  
-                  isLooping
-                  shouldPlay
-                  
-                />
-          ))}
+              <View>
+                {videoSource ? //empty string evals to false
+                  <VideoView
+                    //key={videoSource}
+                    player={player}
+                    style={{ width: '100%', height: 200, marginBottom: 10 }}
+
+                      
+                      
+                  /> :null
+                }
+              </View>
+          
 
               
               
@@ -77,7 +153,7 @@ import { useRouter } from 'expo-router';
             </View>
             </View>
           ); 
-        };
+      };
 
 
 

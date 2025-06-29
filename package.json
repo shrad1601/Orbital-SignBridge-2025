@@ -2,6 +2,7 @@
   "name": "my-tryapp",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "proxy": "http://127.0.0.1:5000",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -40,6 +41,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.4",
     "expo-system-ui": "~5.0.7",
+    "expo-video": "~2.2.2",
     "expo-web-browser": "~14.1.6",
     "nodemailer": "^7.0.3",
     "react": "19.0.0",
@@ -52,10 +54,11 @@
     "react-native-screens": "~4.10.0",
     "react-native-svg": "^15.12.0",
     "react-native-toast-message": "^2.3.0",
-    "react-native-video": "^6.14.1",
+    "react-native-video": "^6.15.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
     "request": "^2.88.2",
+    "use-debounce": "^10.0.5",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
