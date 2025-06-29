@@ -19,9 +19,9 @@ const MAPPING = {
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
   'book': 'auto-stories',
-  'figure.stand': 'BoyOutlined', 
-  'medal': 'WorkspacePremiumOutlined', 
-  'gearshape.fill': 'SettingsOutlined',
+  'figure.stand': 'boy', 
+  'medal': 'military-tech', 
+  'gearshape.fill': 'settings',
   'chevron.left': 'chevron-left',
 
 } ;
