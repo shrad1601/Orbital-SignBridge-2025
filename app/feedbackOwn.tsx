@@ -4,7 +4,12 @@ react hook form to handle user input and onsubmit send email to me */
 
 
 
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image, ImageBackground,
+  Linking,
+  ScrollView, StyleSheet,
+  Text, TextInput, TouchableOpacity, View
+} from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -143,9 +148,10 @@ const Feedback = () => {
                 onPress={() => { 
                 check;
                 console.log('You have pressed the button!');
+                
 
-
-
+                const subj = `feedback from ${name} at ${email}`;
+                Linking.openURL(`mailto:e1385469@u.nus.edu?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(descp)}`)
                 
 
 
