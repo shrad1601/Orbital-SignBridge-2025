@@ -11,13 +11,13 @@ import React, { useState } from 'react';
 
 
 //for avatar dicebear(for now) api
-import { lorelei } from '@dicebear/collection';
+import { adventurer, avataaars, lorelei, micah, openPeeps } from '@dicebear/collection';
 import { createAvatar } from '@dicebear/core';
 import { Button, ScrollView, TextInput, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 //milestone 2-tryna get the avatar customisation available in dicebear
-
+import { Picker } from '@react-native-picker/picker';
 
 
 
@@ -30,10 +30,38 @@ export default function HomeScreen() {
     const [seed, setSeed] = useState('replace this with any name');
     const [svg, setSvg] = useState('');
 
+
+    const [styleOpt, setStyleOpt] = useState<any>();
+    /*coz right with just styleopt i cant do picker sleection properly
+    since i wanna transform styleopt so if i use it in sleectedvalue 
+    it causes problems*/
+    const [styleStrName, setStyleStrName] = useState('lorelei');
+
     const generateAvatar = () => {
-      const avatar = createAvatar(lorelei, { seed }).toString();
-      setSvg(avatar);
+      if(styleOpt == undefined) {
+        const avatar = createAvatar(lorelei, { seed }).toString();
+        setSvg(avatar);
+      } else {
+        const avatar = createAvatar(styleOpt, { seed }).toString();
+        setSvg(avatar);
+      }
     };
+
+    //man i get issues coz createavatar expects obj like lorelei & nth else
+    //so i shall use if-else cond and a func to transform str
+    const transform = (styleOpt) => {
+      if (styleOpt === 'adventurer') {
+        return adventurer;
+      } else if (styleOpt === 'micah') {
+        return micah;
+      } else if (styleOpt === 'openPeeps') {
+        return openPeeps;
+      } else if (styleOpt === 'avataaars') {
+        return avataaars;
+      } else {
+        return lorelei;
+      }
+    }
   
 
 
@@ -47,7 +75,30 @@ export default function HomeScreen() {
 
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Select your character! </ThemedText>  
+
       </ThemedView>
+
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="subtitle">Select one of the styles below </ThemedText>  
+
+      </ThemedView>
+
+      <View>
+        <Picker
+          style={{ flex: 1}}
+            selectedValue={styleStrName}
+            onValueChange={(itemValue, itemIndex) => {
+                setStyleStrName(itemValue)
+                setStyleOpt(transform(itemValue))
+            }
+            }>
+            <Picker.Item label="lorelei" value="lorelei" />
+            <Picker.Item label="adventurer" value="adventurer" />
+            <Picker.Item label="micah" value="micah" />
+            <Picker.Item label="openPeeps" value="openPeeps" />
+            <Picker.Item label="avataaars" value="avataaars" />
+          </Picker>
+      </View>
       
             
         
