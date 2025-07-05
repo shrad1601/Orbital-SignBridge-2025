@@ -44,7 +44,7 @@ import { useDebounce } from "use-debounce";
               //man i had to type the whole url coz i am running on simulator & not web
               //fetch(`http://127.0.0.1:5000/outputURL/${text}`).then( 
               //fetch(` https://0b67-218-212-129-135.ngrok-free.app/outputURL/${text}`).then(
-              fetch(`http://192.168.10.63:5000/outputURL/${text}`).then( 
+              fetch(`http://192.168.10.63:8000/outputURL/${text}`).then( 
                 response => {
                   console.log(response);
                   console.log("response status is " + response.status);
