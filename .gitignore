@@ -39,3 +39,8 @@ yarn-error.*
 app-example
 
 .env.local
+
+#added these (acc ended up committing)
+ios/
+android/
+build-logs/
