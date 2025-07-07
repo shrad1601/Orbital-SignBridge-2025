@@ -1,0 +1,55 @@
+#i am gonna ignore these files for eas build like e.g build-logs
+#so we can easignore everything that is in .gitignore
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+build-logs/
+scripts/
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+eslint.config.js
+
+# typescript
+*.tsbuildinfo
+
+app-example
+
+.env.local
+
+
+# documentation & others
+README.md
+app/scraped data/scrapechecks/
+.github/workflows/
+ios/
+android/
+eslint.config.js
+.vscode/
