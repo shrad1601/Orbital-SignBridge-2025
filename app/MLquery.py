@@ -31,15 +31,33 @@ def outputURL(textFromUser):
   import pandas as pd
   import pickle
 
-  dataset = pd.concat(map(pd.read_csv, ["/Users/deepamalika/SignBridge/app/scraped data/a.csv", "/Users/deepamalika/SignBridge/app/scraped data/b.csv", "/Users/deepamalika/SignBridge/app/scraped data/c.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/d.csv", "/Users/deepamalika/SignBridge/app/scraped data/e.csv", "/Users/deepamalika/SignBridge/app/scraped data/f.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/g.csv", "/Users/deepamalika/SignBridge/app/scraped data/h.csv", "/Users/deepamalika/SignBridge/app/scraped data/i.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/j.csv", "/Users/deepamalika/SignBridge/app/scraped data/k.csv", "/Users/deepamalika/SignBridge/app/scraped data/l.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/m.csv", "/Users/deepamalika/SignBridge/app/scraped data/n.csv", "/Users/deepamalika/SignBridge/app/scraped data/p.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/q.csv", "/Users/deepamalika/SignBridge/app/scraped data/r.csv", "/Users/deepamalika/SignBridge/app/scraped data/s.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/t.csv", "/Users/deepamalika/SignBridge/app/scraped data/u.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/v.csv", "/Users/deepamalika/SignBridge/app/scraped data/w.csv", "/Users/deepamalika/SignBridge/app/scraped data/x.csv",
-                                        "/Users/deepamalika/SignBridge/app/scraped data/y.csv", "/Users/deepamalika/SignBridge/app/scraped data/z.csv"]))
+  dataset = pd.concat(map(pd.read_csv, ["https://scrapedcsvfiles.blob.core.windows.net/26csvs/a.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/b.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/c.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/d.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/e.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/f.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/g.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/h.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/i.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/j.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/k.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/l.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/m.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/n.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/o.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/p.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/q.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/r.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/s.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/t.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/u.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/v.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/w.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/x.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/y.csv",
+                                        "https://scrapedcsvfiles.blob.core.windows.net/26csvs/z.csv"
+                                        ]))
 
   dataset = dataset.dropna()
   dataset['id'] = dataset.index
@@ -72,7 +90,7 @@ def outputURL(textFromUser):
                   "you are very sweet"]
   '''
   user_queries = [textFromUser] #textfromuser coz it is a param in def, it is default string
-  #i shall split each sentence to ind words & generally my file dta is lowercase }nah my model shld be gd enough
+  #split sentence to ind words? }nah my model shld be gd enough
   #tokenised_queries = list(map(str.split,user_queries))
   #queries_embeddings = model.encode(tokenised_queries, convert_to_tesnor=True)
 
