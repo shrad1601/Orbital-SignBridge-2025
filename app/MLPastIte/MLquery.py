@@ -15,13 +15,13 @@ from flask import Flask, Response , jsonify
 #jic
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)
 
 #i think app.route is just to create the url of the https page from which i fetch in .tsx
 @app.route('/outputURL/<textFromUser>')
 def outputURL(textFromUser):
-
 
   print(f"the query we got {textFromUser} ")
   #gonna kinda do embeddings then nearest neighbour serach which is like knn

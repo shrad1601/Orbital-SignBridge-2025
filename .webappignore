@@ -46,10 +46,12 @@ app-example
 
 # documentation & others
 README.md
-app/scraped data/scrapechecks/
+app/scraped data/
 .github/workflows/
 ios/
 android/
 eslint.config.js
 .vscode/
 .venv/
+app/MLPastIte/
+
