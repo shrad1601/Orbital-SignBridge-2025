@@ -65,7 +65,13 @@ def outputURL(textFromUser):
   dataset['word'].str.strip()
   dataset['videoURL'].str.strip()
 
-  model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
+  #model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
+  #doing the following to avoid cannot copy out meta tensor error on azure
+  model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+  model = model.to('cpu')
+
+
+
   #to list coz i dw a dataframe i want the list of words to encode
   embeddings = model.encode(dataset["word"].to_list(), show_progress_bar=True)
 
