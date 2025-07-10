@@ -96,6 +96,17 @@ app.listen(5000, '0.0.0.0', () => {
 }); */
 
 
+
+
+
+
+
+
+
+
+//TODO
+//SHRAD'S LATEST VER BUT COMMENTING OUT SO THAT I CAN RUN MY SIMULATOR
+/*
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
@@ -173,3 +184,6 @@ app.post('/reset-password', async (req, res) => {
 app.listen(5000, '0.0.0.0', () => {
   console.log('Server running on http://0.0.0.0:5000');
 });
+
+
+*/

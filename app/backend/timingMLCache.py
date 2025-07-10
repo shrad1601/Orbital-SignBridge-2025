@@ -1,10 +1,16 @@
 #a neat version of code to show timing diff btw non cached code vs cached. 
 #CACHED VERSION
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+
+
 from flask import Flask, Response , jsonify
 from flask_cors import CORS
 
 import time
 import functools
+
 
 app = Flask(__name__)
 CORS(app)
