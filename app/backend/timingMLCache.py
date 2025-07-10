@@ -11,6 +11,9 @@ from flask_cors import CORS
 import time
 import functools
 
+from sentence_transformers import SentenceTransformer, util
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
+
 
 app = Flask(__name__)
 CORS(app)
@@ -57,8 +60,8 @@ def read():
 
 @functools.cache
 def dsembed():
-  from sentence_transformers import SentenceTransformer, util
-  model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
+  #from sentence_transformers import SentenceTransformer, util
+  #model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
   #to list coz i dw a dataframe i want the list of words to encode
   dataset = read()
   embeddings = model.encode(dataset["word"].to_list(), show_progress_bar=True)
@@ -71,7 +74,7 @@ def outputURL(textFromUser):
 
   start = time.time()
 
-  from sentence_transformers import SentenceTransformer, util
+  #from sentence_transformers import SentenceTransformer, util
   import torch
   import pandas as pd
   import pickle
@@ -79,7 +82,7 @@ def outputURL(textFromUser):
   dataset = read()
   embeddings = dsembed()
   user_queries = [textFromUser] 
-  model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
+  #model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
   queries_embeddings = model.encode(user_queries, convert_to_tensor=True)
 
   import numpy as np

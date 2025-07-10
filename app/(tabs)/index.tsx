@@ -66,6 +66,8 @@ import { useDebounce } from "use-debounce";
                   console.log('this is the cleaned url' + cleanedURL)
                 }
               )
+          } else {
+            setVideoSource('')
           }
 
 
@@ -90,7 +92,7 @@ import { useDebounce } from "use-debounce";
               player.muted = true;
 
               
-            }
+            } 
           }, [videoSource, player]);
 
 
