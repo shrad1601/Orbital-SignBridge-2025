@@ -25,7 +25,7 @@ import { useRouter } from 'expo-router';
 
 //to write the chosen images as file
 
-
+import Toast from 'react-native-toast-message';
 
 //i am gonna make the textinputs using state a function to be called
 const Feedback = () => {
