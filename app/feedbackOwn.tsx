@@ -223,17 +223,17 @@ const Feedback = () => {
             </View> 
 
 
-            //the submit button
+            {/*the submit button*/}
             <TouchableOpacity
                 style={styles.submit}
                 onPress={() => { 
                 check();
                 console.log('You have pressed the button!');
                 
-                /*
+               {/*
                 const subj = `feedback from ${name} at ${email}`;
                 Linking.openURL(`mailto:e1385469@u.nus.edu?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(descp)}`)
-                */
+                */}
 
 
 
@@ -289,9 +289,8 @@ export default function HomeScreen() {
     return ( 
      
     <View style = {styles.forView}> 
-        //shld insert my googleform header here-for it to be fixed in pos it shld be outside scrollview component
+        {/*shld insert my googleform header here-for it to be fixed in pos it shld be outside scrollview component*/}
             <ImageBackground
-              //style={{ width: 80, height: 100, position: 'absolute', bottom:120 }}
               style={styles.headerImage}
               source= {require('@/assets/images/header-src-googleforms.png')}>
                 <TouchableOpacity style={styles.top}
