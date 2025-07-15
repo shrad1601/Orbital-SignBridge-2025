@@ -39,6 +39,7 @@ yarn-error.*
 app-example
 
 .env.local
+.env
 
 #added these (acc ended up committing)
 ios/

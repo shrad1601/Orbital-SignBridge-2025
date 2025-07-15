@@ -6,7 +6,6 @@ react hook form to handle user input and onsubmit send email to me */
 
 import {
   Image, ImageBackground,
-  Linking,
   ScrollView, StyleSheet,
   Text, TextInput, TouchableOpacity, View
 } from 'react-native';
@@ -24,6 +23,9 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useRouter } from 'expo-router';
 
 
+//to write the chosen images as file
+
+
 
 //i am gonna make the textinputs using state a function to be called
 const Feedback = () => {
@@ -34,6 +36,18 @@ const Feedback = () => {
     const [errors, setErrors] = useState({});
 
     const [image, setImage] = useState<string[]>([]);
+
+    //using const means it wont get updated properly esp coz update is done in async func
+    //thus use usestae
+    const [pickerOutput, setPickerOutput] = useState(false);
+    const [pickerUriArr, setPickerUriArr] = useState<string[]>([]);
+    const [pickerTypeArr, setPickerTypeArr] = useState<string[]>([]);
+    const [len, setLen] = useState(0);
+    /*let pickerOutput = false; //set to true if output not cancelled
+    let pickerUriArr :string[] = [];
+    let pickerTypeArr :string[] = [];
+    let len = 0;*/
+
 
     const chooseImage = async () => {
         let output = await ImagePicker.launchImageLibraryAsync( {
@@ -48,13 +62,35 @@ const Feedback = () => {
 
         console.log(output);
 
-        if(!output.canceled) {
             /*shall loop to display all selected images-but idk how many selected. 
              alt is just apply a map func which wld iterate through all images selected
              in an array*/
             //then the image const shld accept string array instead of string to be stored
-            setImage(output.assets.map((img) => img.uri));
+
+        
+        if(!output.canceled) {
+          setPickerOutput(true);
+          console.log("i have set pickeroutput to be " + pickerOutput)
+          setLen(output.assets.length);
+
+          const newUriArr: string[] = []
+          const newTypeArr: string[] = []
+
+          for(let p =0; p < output.assets.length; p++) {
+              
+            newUriArr[p]= output.assets[p].uri;      
+            newTypeArr[p] = (output.assets[p].type !== undefined
+                            ? output.assets[p].type
+                            : '') as string;            
+          }
+
+          setPickerUriArr(newUriArr);
+          setPickerTypeArr(newTypeArr);
+              
+          setImage(output.assets.map((img) => img.uri));
         }
+
+
     };
 
     //to ensure compulsory fields filled (basically any of the text input)
@@ -64,11 +100,56 @@ const Feedback = () => {
         if (!email) newErrors.text = 'Please fill in the email field';
         if (!descp) newErrors.text = 'Please fill in the description field';
         setErrors(newErrors);
+
+        console.log("check has been called");
+
         return Object.keys(newErrors).length == 0;
     }
 
 
-    //the submitting process
+
+
+
+
+
+     //doing formdata to upload uri into server (accesible public url)
+     const formdata = new FormData()
+     const blobUpload = async () => {
+      //only if we even have a pickeroutput aka output not cancelled
+      if(pickerOutput){
+        for(let p =0; p < len; p++) {
+          formdata.append('files', {
+            uri: pickerUriArr[p],
+            type: pickerTypeArr[p],
+            name:`${Date.now()} by ${email}`
+          }as any)
+
+          let res = await fetch(
+            /*i created an azure storage and then a container within 
+            then blob name is like how i wanna name the file upload*/
+            `https://feedbackimg.blob.core.windows.net/img-container/${Date.now()}by${email}`,
+            {
+              method: 'post',
+              body: formdata,
+              headers: {
+              'Content-Type': 'multipart/form-data',
+              }
+            }
+          );
+
+          let responseJson = await res.json();
+          console.log("the responsejson is " + responseJson)
+          console.log(res.statusText)
+        }
+      } else {
+        console.log("bruh pickeroutput is" + pickerOutput);
+      }
+    }
+
+
+
+
+
     
 
 
@@ -146,14 +227,43 @@ const Feedback = () => {
             <TouchableOpacity
                 style={styles.submit}
                 onPress={() => { 
-                check;
+                check();
                 console.log('You have pressed the button!');
                 
-
+                /*
                 const subj = `feedback from ${name} at ${email}`;
                 Linking.openURL(`mailto:e1385469@u.nus.edu?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(descp)}`)
-                
+                */
 
+
+
+
+                console.log('checking pickeroutput after submit ' + pickerOutput);
+                 /*ig i gotta do fetch to my mailgun backend using azure web app link
+                 for testing purposes
+                 TODO GOTTA FIGURE HOW TO DEAL WITH fetch- i mean i just need to trigger the backend*/
+                 blobUpload()
+                 
+                 fetch(`http://192.168.10.63:8001/mail/${name}/${email}/${descp}`).then(
+                  response => {
+                    try {
+                      if(response.ok) {
+                      Toast.show({
+                        type: 'info',
+                        text1: 'Feedback is SUCCESSFULLY sent',
+                        });
+                      } 
+                  } catch(e) {
+                      Toast.show({
+                        type: 'info',
+                        text1: 'Feedback is NOT sent. ' + e,
+                        text2: 'Please try again later'
+                      });
+                    }
+
+                    console.log('fetch is done')
+                  }
+                ) 
 
 
 
@@ -186,7 +296,7 @@ export default function HomeScreen() {
               source= {require('@/assets/images/header-src-googleforms.png')}>
                 <TouchableOpacity style={styles.top}
                    onPress={() => { 
-                           console.log('You have pressed the button!');
+                           console.log('You have pressed the button to back home!');
                            useRouter().push('/(tabs)');     
                           }}>
                     
