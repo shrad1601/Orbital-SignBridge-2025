@@ -4,6 +4,10 @@
 
 name: Build and deploy Python app to Azure Web App - mailgunBack
 
+concurrency: 
+  group: deploy-mailgunBack
+  cancel-in-progress: true
+
 on:
   push:
     branches:
