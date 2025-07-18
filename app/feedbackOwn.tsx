@@ -1,6 +1,7 @@
 /*idea is to create a pg that the home's button links to & i wld use 
 react hook form to handle user input and onsubmit send email to me */
 
+//nth
 
 
 
