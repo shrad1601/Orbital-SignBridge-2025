@@ -2,7 +2,7 @@
 #gonna add all the fiels i dont need
 
 #frontend
-app/(tabs)
+app/(tabs)/
 app/backend/authServer.js
 app/backend/timingMLCache.py
 
