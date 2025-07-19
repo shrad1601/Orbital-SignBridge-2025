@@ -1,4 +1,16 @@
 #for azure (so it deafult ignores node-modules, venv  etc so on top of easignore, i wld include those)
+#gonna add all the fiels i dont need
+
+#frontend
+app/(tabs)
+app/backend/authServer.js
+app/backend/timingMLCache.py
+
+app/authConnect.js
+app/forgotPassword.tsx
+app/login.tsx
+app/resetPass.tsx
+app/signUpPg.tsx
 
 # dependencies
 node_modules/
@@ -46,7 +58,7 @@ app-example
 
 # documentation & others
 README.md
-app/scraped data/
+app/scrapedData/
 .github/workflows/
 ios/
 android/
