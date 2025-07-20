@@ -6,6 +6,7 @@ react hook form to handle user input and onsubmit send email to me */
 
 
 import {
+  Alert,
   Image, ImageBackground,
   ScrollView, StyleSheet,
   Text, TextInput, TouchableOpacity, View
@@ -114,21 +115,29 @@ const Feedback = () => {
 
 
      //doing formdata to upload uri into server (accesible public url)
-     const formdata = new FormData()
+     //const formdata = new FormData()
      const blobUpload = async () => {
+
+      const resp: Response[] = [];
+
       //only if we even have a pickeroutput aka output not cancelled
       if(pickerOutput){
         for(let p =0; p < len; p++) {
-          formdata.append('files', {
+          const formdata = new FormData()
+          formdata.append('file', {
             uri: pickerUriArr[p],
             type: pickerTypeArr[p],
             name:`${Date.now()} by ${email}`
           }as any)
 
+          formdata.append('upload_preset','imgFeedback')
+          formdata.append("cloud_name", "datjhiago")
+
           let res = await fetch(
             /*i created an azure storage and then a container within 
             then blob name is like how i wanna name the file upload*/
-            `https://feedbackimg.blob.core.windows.net/img-container/${Date.now()}by${email}`,
+           // `https://feedbackimg.blob.core.windows.net/img-container/${Date.now()}by${email}`,
+           `https://api.cloudinary.com/v1_1/datjhiago/image/upload`,
             {
               method: 'post',
               body: formdata,
@@ -137,13 +146,16 @@ const Feedback = () => {
               }
             }
           );
+          resp.push(res);
 
-          let responseJson = await res.json();
-          console.log("the responsejson is " + responseJson)
-          console.log(res.statusText)
+          //let responseJson = await res.json();
+          //console.log("the responsejson is " + JSON.stringify(responseJson))
+          //console.log(res.statusText)
         }
+        return resp;
       } else {
         console.log("bruh pickeroutput is" + pickerOutput);
+        return resp;
       }
     }
 
@@ -162,7 +174,7 @@ const Feedback = () => {
     return (
         <View>
             <ThemedView style={styles.identiTextContainer}>
-                <ThemedText type="title">Name </ThemedText>  
+                <ThemedText type="title">Name* </ThemedText>  
             </ThemedView>
 
             <View style={{padding:10}}>
@@ -178,7 +190,7 @@ const Feedback = () => {
 
 
             <ThemedView style={styles.identiTextContainer}>
-                <ThemedText type="title">Email </ThemedText>  
+                <ThemedText type="title">Email* </ThemedText>  
             </ThemedView>
 
             <View style={{padding:10}}>
@@ -193,7 +205,7 @@ const Feedback = () => {
 
 
             <ThemedView style={styles.identiTextContainer}>
-                <ThemedText type="title">Description </ThemedText>  
+                <ThemedText type="title">Description* </ThemedText>  
             </ThemedView>
 
             <View style={{padding:10}}>
@@ -228,46 +240,71 @@ const Feedback = () => {
             <TouchableOpacity
                 style={styles.submit}
                 onPress={() => { 
-                check();
-                console.log('You have pressed the button!');
-                
-               {/*
-                const subj = `feedback from ${name} at ${email}`;
-                Linking.openURL(`mailto:e1385469@u.nus.edu?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(descp)}`)
-                */}
+                  if(!check()) {
+                    //so check failed
+                    Alert.alert('WARNING:', 'Please fill in ALL fields with an asterisk!!', [
+                      {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ]);
+
+                  } else {
+                    
+                    console.log('You have pressed the button!');
+                  
+                    {/*
+                      const subj = `feedback from ${name} at ${email}`;
+                      Linking.openURL(`mailto:e1385469@u.nus.edu?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(descp)}`)
+                    */}
 
 
 
 
-                console.log('checking pickeroutput after submit ' + pickerOutput);
-                 /*ig i gotta do fetch to my mailgun backend using azure web app link
-                 for testing purposes
-                 TODO GOTTA FIGURE HOW TO DEAL WITH fetch- i mean i just need to trigger the backend*/
-                 blobUpload()
-                 
-                 fetch(`http://192.168.10.63:8001/mail/${name}/${email}/${descp}`).then(
-                  response => {
-                    try {
-                      if(response.ok) {
-                      Toast.show({
-                        type: 'info',
-                        text1: 'Feedback is SUCCESSFULLY sent',
-                        });
-                      } 
-                  } catch(e) {
-                      Toast.show({
-                        type: 'info',
-                        text1: 'Feedback is NOT sent. ' + e,
-                        text2: 'Please try again later'
-                      });
-                    }
+                    console.log('checking pickeroutput after submit ' + pickerOutput);
+                    /*ig i gotta do fetch to my mailgun backend using azure web app link
+                    for testing purposes
+                    TODO GOTTA FIGURE HOW TO DEAL WITH fetch- i mean i just need to trigger the backend*/
+                   //try blobupload, if ok then do fetch. 
+                    blobUpload().then(
+                      resp => {
+                        try {
+                          
+                          let accStatus = true;
+                          for(let p =0; p++; p < resp.length) {
+                            if(!resp[p].ok) {
+                              accStatus = false;
+                            }
 
-                    console.log('fetch is done')
+                          }
+                          if (accStatus) {
+                            fetch(`https://mailgunback-fjfnfjaaenbdcnhq.southeastasia-01.azurewebsites.net/mail/${name}/${email}/${descp}`).then(
+                              response => {
+                                if (response.ok) {
+                                  Toast.show({
+                                    type: 'info',
+                                    text1: 'Feedback is SUCCESSFULLY sent!'
+                                  });
+                                } else {
+                                    Toast.show({
+                                      type: 'info',
+                                      text1: 'Feedback message is NOT sent. ',
+                                      text2: 'Please try again later'
+                                    });
+                                }
+                              }
+                            
+                            )
+                          } 
+                        } catch (e) {
+                            Toast.show({
+                              type: 'info',
+                              text1: 'Image upload is NOT sent. ',
+                              text2: 'Please try again later or without image upload'
+                            });
+
+                        }
+
+                      }
+                    )
                   }
-                ) 
-
-
-
 
 
 
