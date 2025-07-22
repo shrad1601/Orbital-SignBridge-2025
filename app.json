@@ -50,7 +50,8 @@
       ],
       "expo-font",
       "expo-video",
-      "expo-web-browser"
+      "expo-web-browser",
+      "react-native-compressor"
     ],
     "experiments": {
       "typedRoutes": true
@@ -61,6 +62,5 @@
         "projectId": "873240d5-93e1-4b30-83b9-8fb675df4b9d"
       }
     }
-    
   }
 }

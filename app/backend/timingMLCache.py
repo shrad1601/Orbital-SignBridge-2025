@@ -18,7 +18,7 @@ model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cp
 app = Flask(__name__)
 CORS(app)
 
-
+'''
 @functools.cache
 def read():
   import pandas as pd
@@ -67,6 +67,9 @@ def dsembed():
   embeddings = model.encode(dataset["word"].to_list(), show_progress_bar=True)
   return embeddings
 
+  '''
+
+#i have created the embeddings as 1 file to prvent gateway timeout
 @app.route('/outputURL/<textFromUser>')
 def outputURL(textFromUser):
 
@@ -79,8 +82,8 @@ def outputURL(textFromUser):
   import pandas as pd
   import pickle
 
-  dataset = read()
-  embeddings = dsembed()
+  dataset = pd.read_parquet('dataset.parquet', engine='pyarrow')
+  embeddings = pd.read_parquet('embeddings.parquet', engine='pyarrow')
   user_queries = [textFromUser] 
   #model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device="cpu")
   queries_embeddings = model.encode(user_queries, convert_to_tensor=True)

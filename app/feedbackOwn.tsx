@@ -25,7 +25,8 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useRouter } from 'expo-router';
 
 
-//to write the chosen images as file
+//to compress image to speed up process
+import { Image as CompressImager } from 'react-native-compressor';
 
 import Toast from 'react-native-toast-message';
 
@@ -77,6 +78,17 @@ const Feedback = () => {
 
           const newUriArr: string[] = []
           const newTypeArr: string[] = []
+
+          //lets compress the uri first
+          for(let i = 0; i < output.assets.length; i++) {
+            output.assets[i].uri = await CompressImager.compress(output.assets[i].uri, {
+              compressionMethod: 'manual',
+              maxWidth:1000,
+              quality:0.7,
+            });
+          }
+
+          console.log('new output after compress is ' + JSON.stringify(output));
 
           for(let p =0; p < output.assets.length; p++) {
               
