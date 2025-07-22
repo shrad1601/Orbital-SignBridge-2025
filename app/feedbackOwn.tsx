@@ -30,6 +30,10 @@ import { Image as CompressImager } from 'react-native-compressor';
 
 import Toast from 'react-native-toast-message';
 
+//damn unfortunately in apk the image uri is content// which fetch all can't read and also is temporary
+//so i am gonna copy the chosen image first to get file path
+import * as FileSystem from 'expo-file-system';
+
 //i am gonna make the textinputs using state a function to be called
 const Feedback = () => {
     const [name, setName] = useState('');
@@ -90,9 +94,21 @@ const Feedback = () => {
 
           console.log('new output after compress is ' + JSON.stringify(output));
 
+          //lets "convert" content// uri to file// uri & then set it to newuriarr
           for(let p =0; p < output.assets.length; p++) {
               
-            newUriArr[p]= output.assets[p].uri;      
+            const ogUri = output.assets[p].uri;
+            const filename = `${Date.now()}_by_${email}_&_${name}`
+            const newpathURI = FileSystem.cacheDirectory + filename;
+
+
+            await FileSystem.copyAsync({
+              from: ogUri,
+              to:newpathURI
+            })
+
+            //newUriArr[p]= output.assets[p].uri;
+            newUriArr[p]=newpathURI;      
             newTypeArr[p] = (output.assets[p].type !== undefined
                             ? output.assets[p].type
                             : '') as string;            

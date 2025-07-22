@@ -4,7 +4,7 @@
 #frontend
 app/(tabs)/
 app/backend/authServer.js
-app/backend/timingMLCache.py
+#app/backend/timingMLCache.py
 
 app/authConnect.js
 app/forgotPassword.tsx
