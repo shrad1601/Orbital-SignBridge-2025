@@ -17,7 +17,7 @@ import { ThemedView } from '@/components/ThemedView';
 //import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 //to upload ss
 import * as ImagePicker from 'expo-image-picker';
 
@@ -33,6 +33,7 @@ import Toast from 'react-native-toast-message';
 //damn unfortunately in apk the image uri is content// which fetch all can't read and also is temporary
 //so i am gonna copy the chosen image first to get file path
 import * as FileSystem from 'expo-file-system';
+import React from 'react';
 
 //i am gonna make the textinputs using state a function to be called
 const Feedback = () => {
